@@ -20,6 +20,7 @@ namespace PostGIS_WebAPI.REPOSITORIES.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasPostgresExtension("postgis");
             modelBuilder.HasDefaultSchema("public");
+           
         }
 
         public DbSet<Building> Buildings { get; set; }

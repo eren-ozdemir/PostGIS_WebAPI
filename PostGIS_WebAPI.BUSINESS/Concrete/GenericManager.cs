@@ -39,6 +39,11 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             throw new NotImplementedException();
         }
 
+        public List<T> GetAll()
+        {
+            return _repo.GetAll();
+        }
+
         public List<T> GetByDefault(Expression<Func<T, bool>> exp)
         {
             return _repo.GetByDefault(exp);

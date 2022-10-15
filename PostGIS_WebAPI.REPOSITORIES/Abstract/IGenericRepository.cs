@@ -14,6 +14,7 @@ namespace PostGIS_WebAPI.REPOSITORIES.Abstract
         bool Add(List<T> item);
         bool Update(T item);
         bool Remove(T item);
+        List<T> GetAll();
         T GetById(int id);
         T GetDefault(Expression<Func<T, bool>> exp);
         List<T> GetByDefault(Expression<Func<T, bool>> exp);

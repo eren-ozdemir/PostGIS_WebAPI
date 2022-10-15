@@ -17,13 +17,12 @@ namespace PostGIS_WebAPI.REPOSITORIES.Migrations
                 .Annotation("Npgsql:PostgresExtension:postgis", ",,");
 
             migrationBuilder.CreateTable(
-                name: "Buildings",
+                name: "buildings",
                 schema: "public",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    geom = table.Column<Geometry>(type: "geometry", nullable: true),
                     osm_id = table.Column<string>(type: "text", nullable: true),
                     lastchange = table.Column<string>(type: "text", nullable: true),
                     code = table.Column<int>(type: "integer", nullable: false),
@@ -34,18 +33,19 @@ namespace PostGIS_WebAPI.REPOSITORIES.Migrations
                     height = table.Column<int>(type: "integer", nullable: false),
                     levels = table.Column<int>(type: "integer", nullable: false),
                     category = table.Column<int>(type: "integer", nullable: false),
-                    isActive = table.Column<bool>(type: "boolean", nullable: false)
+                    //isactive = table.Column<bool>(type: "boolean", nullable: false),
+                    geom = table.Column<Geometry>(type: "geometry", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Buildings", x => x.id);
+                    table.PrimaryKey("pk_buildings", x => x.id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Buildings",
+                name: "buildings",
                 schema: "public");
         }
     }

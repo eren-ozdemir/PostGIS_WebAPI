@@ -10,16 +10,15 @@ namespace PostGIS_WebAPI.ENTITIES.Entities
 {
     public class Building : BaseEntity
     {
-        public string osm_id { get; set; }
-        public string lastchange { get; set; }
-        public int code { get; set; }
-        public string fclass { get; set; }
-        public char geomtype { get; set; }
-        public string name { get; set; }
-        public string type { get; set; }
-        public int height { get; set; }
-        public int levels { get; set; }
-        public int category { get; set; }
-        public bool isActive { get; set; }
+        public string Osm_Id { get; set; }
+        public string LastChange { get; set; }
+        public int Code { get; set; }
+        public string FClass { get; set; }
+        public char GeomType { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public int Height { get; set; }
+        public int Levels { get; set; }
+        public int Category { get; set; }
     }
 }

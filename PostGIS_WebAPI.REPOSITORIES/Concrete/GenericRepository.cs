@@ -37,6 +37,11 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
             return Save();
         }
 
+        public List<T> GetAll()
+        {
+            return _db.Set<T>().ToList();
+        }
+
         public List<T> GetByDefault(Expression<Func<T, bool>> exp)
         {
             return _db.Set<T>().Where(exp).ToList();
