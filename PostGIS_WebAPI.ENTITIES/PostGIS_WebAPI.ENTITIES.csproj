@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.LegacyPostgis" Version="5.0.15" />
+    <PackageReference Include="Npgsql.NetTopologySuite" Version="6.0.7" />
+  </ItemGroup>
+
+</Project>

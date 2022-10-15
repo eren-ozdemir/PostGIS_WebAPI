@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGIS_WebAPI", "PostGIS_WebAPI\PostGIS_WebAPI.csproj", "{80B7F2A6-2441-48E2-95BE-78EA75AC2C6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGIS_WebAPI.ENTITIES", "PostGIS_WebAPI.ENTITIES\PostGIS_WebAPI.ENTITIES.csproj", "{ECE8766A-AE0B-4901-AFCD-5C58D55547FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostGIS_WebAPI.REPOSITORIES", "PostGIS_WebAPI.REPOSITORIES\PostGIS_WebAPI.REPOSITORIES.csproj", "{432A8FBC-90B3-4EFC-B937-5E048AE870B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostGIS_WebAPI.BUSINESS", "PostGIS_WebAPI.BUSINESS\PostGIS_WebAPI.BUSINESS.csproj", "{8E35B8F9-7661-4FAF-9321-22E6EA459905}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80B7F2A6-2441-48E2-95BE-78EA75AC2C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80B7F2A6-2441-48E2-95BE-78EA75AC2C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80B7F2A6-2441-48E2-95BE-78EA75AC2C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80B7F2A6-2441-48E2-95BE-78EA75AC2C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECE8766A-AE0B-4901-AFCD-5C58D55547FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECE8766A-AE0B-4901-AFCD-5C58D55547FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECE8766A-AE0B-4901-AFCD-5C58D55547FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECE8766A-AE0B-4901-AFCD-5C58D55547FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{432A8FBC-90B3-4EFC-B937-5E048AE870B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{432A8FBC-90B3-4EFC-B937-5E048AE870B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{432A8FBC-90B3-4EFC-B937-5E048AE870B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{432A8FBC-90B3-4EFC-B937-5E048AE870B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E35B8F9-7661-4FAF-9321-22E6EA459905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E35B8F9-7661-4FAF-9321-22E6EA459905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E35B8F9-7661-4FAF-9321-22E6EA459905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E35B8F9-7661-4FAF-9321-22E6EA459905}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6FE421B-CE78-43CC-8273-C59AAD2AAFC6}
+	EndGlobalSection
+EndGlobal
