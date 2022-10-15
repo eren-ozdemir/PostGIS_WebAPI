@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PostGIS_WebAPI.REPOSITORIES.Context
 {
-    public class ProjectContext : DbContext
+    public class CityContext : DbContext
     {
-        public ProjectContext(DbContextOptions options) : base(options)
+        public CityContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -21,6 +21,7 @@ namespace PostGIS_WebAPI.REPOSITORIES.Context
             modelBuilder.HasPostgresExtension("postgis");
             modelBuilder.HasDefaultSchema("public");
         }
-        public DbSet<FeatureCollection> FeatureCollections { get; set; }
+
+        public DbSet<Building> Buildings { get; set; }
     }
 }

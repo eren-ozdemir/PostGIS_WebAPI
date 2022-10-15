@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace PostGIS_WebAPI.ENTITIES.Entities
 {
-    public class Feature : BaseEntity
+    public class BaseEntity
     {
-        public string Type { get; set; }
-        public string Properties { get; set; }
+        public int Id { get; set; }
+        public bool IsActive { get; set; }
+        public Geometry Geom { get; set; }
     }
 }

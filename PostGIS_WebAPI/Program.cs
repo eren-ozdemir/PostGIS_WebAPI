@@ -6,9 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<ProjectContext>(options =>
+
+builder.Services.AddDbContext<CityContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQL"),
+    options.UseNpgsql(builder.Configuration.GetConnectionString("City"),
         x => x.UseNetTopologySuite()
         );
 });
