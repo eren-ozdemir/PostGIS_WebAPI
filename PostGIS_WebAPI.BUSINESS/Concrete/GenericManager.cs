@@ -26,6 +26,11 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             return Activate(item);
         }
 
+        public bool ActivateAll()
+        {
+            return _repo.ActivateAll();
+        }
+
         public bool Add(T item)
         {
             if (item == null)
@@ -64,6 +69,11 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             if (item == null)
                 return false;
             return _repo.Remove(item);
+        }
+
+        public bool Remove(List<T> items)
+        {
+            return _repo.Remove(items);
         }
 
         public bool Update(T item)

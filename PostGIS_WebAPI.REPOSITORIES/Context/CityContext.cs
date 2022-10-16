@@ -10,7 +10,7 @@ namespace PostGIS_WebAPI.REPOSITORIES.Context
 {
     public class CityContext : DbContext
     {
-        public CityContext(DbContextOptions options) : base(options)
+        public CityContext(DbContextOptions<CityContext> options) : base(options)
         {
 
         }
@@ -20,7 +20,6 @@ namespace PostGIS_WebAPI.REPOSITORIES.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasPostgresExtension("postgis");
             modelBuilder.HasDefaultSchema("public");
-           
         }
 
         public DbSet<Building> Buildings { get; set; }

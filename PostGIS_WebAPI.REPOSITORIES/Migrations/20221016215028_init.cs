@@ -32,9 +32,8 @@ namespace PostGIS_WebAPI.REPOSITORIES.Migrations
                     type = table.Column<string>(type: "text", nullable: true),
                     height = table.Column<int>(type: "integer", nullable: false),
                     levels = table.Column<int>(type: "integer", nullable: false),
-                    category = table.Column<int>(type: "integer", nullable: false),
-                    //isactive = table.Column<bool>(type: "boolean", nullable: false),
-                    geom = table.Column<Geometry>(type: "geometry", nullable: true)
+                    geom = table.Column<Geometry>(type: "geometry", nullable: true),
+                    //isactive = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

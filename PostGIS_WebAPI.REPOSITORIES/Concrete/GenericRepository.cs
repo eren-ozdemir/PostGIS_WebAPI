@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace PostGIS_WebAPI.REPOSITORIES.Concrete
 {
@@ -23,6 +24,28 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
         {
             item.IsActive = true;
             return Save();
+        }
+
+        public bool ActivateAll()
+        {
+            try
+            {
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    var inactives = _db.Set<T>().Where(x => !x.IsActive).ToList();
+                    foreach (T item in inactives)
+                    {
+                        item.IsActive = true;
+                    }
+                    Save();
+                    ts.Complete();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Add(T item)
@@ -61,6 +84,26 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
         {
             item.IsActive = false;
             return Save();
+        }
+
+        public bool Remove(List<T> items)
+        {
+            try
+            {
+                using (TransactionScope ts = new TransactionScope())
+                {
+                    foreach (T item in items)
+                        Remove(item);
+
+                    ts.Complete();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         public  bool Save()

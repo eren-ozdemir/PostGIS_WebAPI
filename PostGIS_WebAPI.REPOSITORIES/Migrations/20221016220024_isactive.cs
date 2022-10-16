@@ -14,7 +14,7 @@ namespace PostGIS_WebAPI.REPOSITORIES.Migrations
                 table: "buildings",
                 type: "boolean",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

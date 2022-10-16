@@ -5,27 +5,36 @@ using PostGIS_WebAPI.ENTITIES.Entities;
 using PostGIS_WebAPI.REPOSITORIES.Abstract;
 using PostGIS_WebAPI.REPOSITORIES.Concrete;
 using PostGIS_WebAPI.REPOSITORIES.Context;
+using NetTopologySuite.IO.Converters; 
+using NetTopologySuite.Features; 
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using NetTopologySuite;
+using NetTopologySuite.Geometries;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddDbContext<CityContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("City"),
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("City"),
         x => x.UseNetTopologySuite()
-        ).UseLowerCaseNamingConvention();
+        )
+    .UseLowerCaseNamingConvention();
 });
 
-builder.Services.AddTransient<IGenericRepository<Building>, GenericRepository<Building>>();
-builder.Services.AddTransient<IGenericService<Building>, GenericManager<Building>>();
+builder.Services.AddTransient(typeof(IGenericService<>), typeof(GenericManager<>));
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 

@@ -12,8 +12,8 @@ using PostGIS_WebAPI.REPOSITORIES.Context;
 namespace PostGIS_WebAPI.REPOSITORIES.Migrations
 {
     [DbContext(typeof(CityContext))]
-    [Migration("20221015221559_init")]
-    partial class init
+    [Migration("20221016220024_isactive")]
+    partial class isactive
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,10 +34,6 @@ namespace PostGIS_WebAPI.REPOSITORIES.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Category")
-                        .HasColumnType("integer")
-                        .HasColumnName("category");
 
                     b.Property<int>("Code")
                         .HasColumnType("integer")
