@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace PostGIS_WebAPI.BUSINESS.Concrete
@@ -62,6 +63,17 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
         public T GetDefault(Expression<Func<T, bool>> exp)
         {
             return _repo.GetDefault(exp);
+        }
+
+        public string ListToGeoJson(List<T> items)
+        {
+            var features = items.Where(x=>x.IsActive).Select(x => new { type = "Feature", geometry = x.Geom, id = x.Id });
+            var options = new JsonSerializerOptions();
+
+            options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
+
+            var serialized = JsonSerializer.Serialize(features, options);
+            return serialized.ToString();
         }
 
         public bool Remove(T item)

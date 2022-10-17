@@ -19,6 +19,5 @@ namespace PostGIS_WebAPI.ENTITIES.Entities
         public string Type { get; set; }
         public int Height { get; set; }
         public int Levels { get; set; }
-        public Geometry Geom { get; set; }
     }
 }

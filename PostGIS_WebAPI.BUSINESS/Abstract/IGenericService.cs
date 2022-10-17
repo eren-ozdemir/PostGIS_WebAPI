@@ -21,5 +21,6 @@ namespace PostGIS_WebAPI.BUSINESS.Abstract
         List<T> GetByDefault(Expression<Func<T, bool>> exp);
         bool Activate(T item);
         bool ActivateAll();
+        string ListToGeoJson(List<T> items);
     }
 }

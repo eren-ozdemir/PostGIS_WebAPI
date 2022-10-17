@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PostGIS_WebAPI.BUSINESS.Abstract;
 using PostGIS_WebAPI.ENTITIES.Entities;
+using System.Text.Json;
 
 namespace PostGIS_WebAPI.Controllers
 {
@@ -39,20 +41,42 @@ namespace PostGIS_WebAPI.Controllers
         {
             if (featureCollection == null)
                 return BadRequest();
+            else if (featureCollection.Features.Count == 0)
+                return BadRequest("No Feature Detected");
 
-            featureCollection.Features[0].Geometry.CreatePolygon();
-            var chk = featureCollection.Features[0].Geometry;
 
             List<Building> allIntersects = new List<Building>();
 
             foreach (Feature item in featureCollection.Features)
             {
-                List<Building> intersects = _buildingService.GetByDefault(x => x.Geom.Intersects(chk.MultiPolygon));
+                List<Building> intersects = _buildingService.GetByDefault(x => x.Geom.Intersects(item.Geometry.MultiPolygon));
                 allIntersects.AddRange(intersects);
             }
-                _buildingService.Remove(allIntersects);
+            _buildingService.Remove(allIntersects);
 
             return Ok();
+        }
+
+        [HttpPost]
+        [Route("GetIntersectingFeatures")]
+        public IActionResult GetIntersectingFeatures([FromBody] FeatureCollection featureCollection)
+        {
+            if (featureCollection == null)
+                return BadRequest();
+            else if (featureCollection.Features.Count == 0)
+                return BadRequest("No Feature Detected");
+
+            List<Building> allIntersects = new List<Building>();
+
+            foreach (Feature item in featureCollection.Features)
+            {
+                List<Building> intersects = _buildingService.GetByDefault(x => x.Geom.Intersects(item.Geometry.MultiPolygon));
+                allIntersects.AddRange(intersects);
+
+            }
+            
+
+            return Ok(_buildingService.ListToGeoJson(allIntersects));
         }
     }
 }

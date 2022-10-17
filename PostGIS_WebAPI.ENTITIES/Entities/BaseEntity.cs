@@ -12,5 +12,6 @@ namespace PostGIS_WebAPI.ENTITIES.Entities
     {
         public int Id { get; set; }
         public bool IsActive { get; set; }
+        public Geometry Geom { get; set; }
     }
 }

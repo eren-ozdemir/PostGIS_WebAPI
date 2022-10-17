@@ -11,7 +11,7 @@ namespace PostGIS_WebAPI.ENTITIES.Entities
     {
         public string Type { get; set; }
         public string Properties { get; set; }
-        public Sekil Geometry { get; set; }
+        public MyGeometry Geometry { get; set; }
 
     }
 }

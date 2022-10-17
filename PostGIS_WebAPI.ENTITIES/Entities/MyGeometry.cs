@@ -8,18 +8,29 @@ using System.Threading.Tasks;
 
 namespace PostGIS_WebAPI.ENTITIES.Entities
 {
-    public class Sekil
+    public class MyGeometry
     {
         public string Type { get; set; }
-        public double[][][] Coordinates { get; set; }
         public MultiPolygon MultiPolygon { get; set; }
 
-        public void CreatePolygon()
+        private double[][][] _coordinates;
+
+        public double[][][] Coordinates
         {
-            Coordinate[] arr = new Coordinate[5];
-            for (int i = 0; i < 5; i++)
+            get { return _coordinates; }
+            set 
+            { 
+                _coordinates = value; 
+                CreatePolygon();
+            }
+        }
+
+        private void CreatePolygon()
+        {
+            Coordinate[] arr = new Coordinate[_coordinates[0].Length];
+            for (int i = 0; i < _coordinates[0].Length; i++)
             {
-                arr[i] = new Coordinate() { X = Coordinates[0][i][0], Y = Coordinates[0][i][1] };
+                arr[i] = new Coordinate() { X = _coordinates[0][i][0], Y = _coordinates[0][i][1] };
             }
 
             Polygon Cokgen = new Polygon(new LinearRing(arr));
