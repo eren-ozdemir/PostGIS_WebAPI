@@ -1,4 +1,6 @@
-﻿using PostGIS_WebAPI.BUSINESS.Abstract;
+﻿using NetTopologySuite.Features;
+using NetTopologySuite.Geometries;
+using PostGIS_WebAPI.BUSINESS.Abstract;
 using PostGIS_WebAPI.ENTITIES.Entities;
 using PostGIS_WebAPI.REPOSITORIES.Abstract;
 using System;
@@ -21,7 +23,7 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
         }
         public bool Activate(T item)
         {
-            if(item == null)
+            if (item == null)
                 return false;
 
             return Activate(item);
@@ -37,7 +39,7 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             if (item == null)
                 return false;
 
-           return _repo.Add(item);
+            return _repo.Add(item);
         }
 
         public bool Add(List<T> item)
@@ -65,17 +67,6 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             return _repo.GetDefault(exp);
         }
 
-        public string ListToGeoJson(List<T> items)
-        {
-            var features = items.Where(x=>x.IsActive).Select(x => new { type = "Feature", geometry = x.Geom, id = x.Id });
-            var options = new JsonSerializerOptions();
-
-            options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
-
-            var serialized = JsonSerializer.Serialize(features, options);
-            return serialized.ToString();
-        }
-
         public bool Remove(T item)
         {
             if (item == null)
@@ -94,6 +85,27 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
                 return false;
 
             return _repo.Update(item);
+        }
+
+        public List<T> GetIntersectingItems(FeatureCollection collection)
+        {
+            List<T> result = new List<T>();
+
+            foreach (var item in collection)
+            {
+                List<T> intersects = GetByDefault(x => x.IsActive && x.Geometry.Intersects(item.Geometry));
+                result.AddRange(intersects);
+            }
+
+            return result;
+        }
+
+        public T GetItemFromCoordinates(double[] coordinates)
+        {
+            GeometryFactory fact = new GeometryFactory(new PrecisionModel(), 4326);
+            Point point = fact.CreatePoint(new Coordinate(coordinates[0], coordinates[1]));
+            T result = GetDefault(x => x.IsActive && x.Geometry.Intersects(point));
+            return result;
         }
     }
 }

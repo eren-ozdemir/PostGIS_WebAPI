@@ -67,7 +67,15 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
 
         public List<T> GetByDefault(Expression<Func<T, bool>> exp)
         {
-            return _db.Set<T>().Where(exp).ToList();
+            try
+            {
+                return _db.Set<T>().Where(exp).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public  T GetById(int id)
@@ -77,7 +85,16 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
 
         public T GetDefault(Expression<Func<T, bool>> exp)
         {
-            return _db.Set<T>().FirstOrDefault(exp);
+            try
+            {
+                T result = _db.Set<T>().FirstOrDefault(exp);
+                return result;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
 
         public bool Remove(T item)

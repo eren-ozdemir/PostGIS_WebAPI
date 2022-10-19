@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NetTopologySuite.Features;
+using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
 using PostGIS_WebAPI.BUSINESS.Abstract;
 using PostGIS_WebAPI.ENTITIES.Entities;
@@ -18,13 +20,6 @@ namespace PostGIS_WebAPI.Controllers
             _buildingService = buildingService;
         }
 
-        [HttpGet]
-        [Route("GetAll")]
-        public IActionResult GetBuildings()
-        {
-            return Ok(_buildingService.GetAll());
-        }
-
         [HttpPut]
         [Route("ActivateAll")]
         public IActionResult ActivateAll()
@@ -41,19 +36,10 @@ namespace PostGIS_WebAPI.Controllers
         {
             if (featureCollection == null)
                 return BadRequest();
-            else if (featureCollection.Features.Count == 0)
+            else if (featureCollection.Count == 0)
                 return BadRequest("No Feature Detected");
 
-
-            List<Building> allIntersects = new List<Building>();
-
-            foreach (Feature item in featureCollection.Features)
-            {
-                List<Building> intersects = _buildingService.GetByDefault(x => x.Geom.Intersects(item.Geometry.MultiPolygon));
-                allIntersects.AddRange(intersects);
-            }
-            _buildingService.Remove(allIntersects);
-
+            _buildingService.Remove(_buildingService.GetIntersectingItems(featureCollection));
             return Ok();
         }
 
@@ -63,20 +49,23 @@ namespace PostGIS_WebAPI.Controllers
         {
             if (featureCollection == null)
                 return BadRequest();
-            else if (featureCollection.Features.Count == 0)
+            else if (featureCollection.Count == 0)
                 return BadRequest("No Feature Detected");
 
-            List<Building> allIntersects = new List<Building>();
+            var result = _buildingService.GetIntersectingItems(featureCollection);
+            return Ok(result);
+        }
 
-            foreach (Feature item in featureCollection.Features)
-            {
-                List<Building> intersects = _buildingService.GetByDefault(x => x.Geom.Intersects(item.Geometry.MultiPolygon));
-                allIntersects.AddRange(intersects);
+        [HttpPost]
+        [Route("GetBuilding")]
+        public IActionResult GetBuilding(double[] coordinates)
+        {
+            if (coordinates == null)
+                return BadRequest();
 
-            }
-            
+            Building building = _buildingService.GetItemFromCoordinates(coordinates);
 
-            return Ok(_buildingService.ListToGeoJson(allIntersects));
+            return Ok(building);
         }
     }
 }

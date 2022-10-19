@@ -1,4 +1,5 @@
-﻿using PostGIS_WebAPI.ENTITIES.Entities;
+﻿using NetTopologySuite.Features;
+using PostGIS_WebAPI.ENTITIES.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace PostGIS_WebAPI.BUSINESS.Abstract
         List<T> GetByDefault(Expression<Func<T, bool>> exp);
         bool Activate(T item);
         bool ActivateAll();
-        string ListToGeoJson(List<T> items);
+        List<T> GetIntersectingItems(FeatureCollection features);
+        public T GetItemFromCoordinates(double[] coordinates);
     }
 }

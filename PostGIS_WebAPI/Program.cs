@@ -1,16 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using PostGIS_WebAPI.BUSINESS.Abstract;
 using PostGIS_WebAPI.BUSINESS.Concrete;
-using PostGIS_WebAPI.ENTITIES.Entities;
 using PostGIS_WebAPI.REPOSITORIES.Abstract;
 using PostGIS_WebAPI.REPOSITORIES.Concrete;
 using PostGIS_WebAPI.REPOSITORIES.Context;
-using NetTopologySuite.IO.Converters; 
-using NetTopologySuite.Features; 
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using NetTopologySuite;
-using NetTopologySuite.Geometries;
+using NetTopologySuite.IO.Converters;
+using PostGIS_WebAPI.ENTITIES.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
-builder.Services.AddSwaggerGen();
 
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = new LowerCaseNamingPolicy();
+    options.JsonSerializerOptions.WriteIndented = true;
+    options.JsonSerializerOptions.Converters.Add(new GeoJsonConverterFactory()); //Makes actions can accept geojson objects as paramater
+   
+});
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<CityContext>(options =>
 {
