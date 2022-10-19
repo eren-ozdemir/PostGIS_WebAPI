@@ -23,6 +23,7 @@ namespace PostGIS_WebAPI.BUSINESS.Abstract
         bool Activate(T item);
         bool ActivateAll();
         List<T> GetIntersectingItems(FeatureCollection features);
-        public T GetItemFromCoordinates(double[] coordinates);
+        T GetItemFromCoordinates(double[] coordinates);
+        List<T> GetBySQLQuery(string sql);
     }
 }

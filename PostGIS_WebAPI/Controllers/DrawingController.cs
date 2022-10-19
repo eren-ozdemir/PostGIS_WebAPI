@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 using PostGIS_WebAPI.BUSINESS.Abstract;
 using PostGIS_WebAPI.ENTITIES.Entities;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
+using System.Text;
+using Microsoft.Data.SqlClient;
 
 namespace PostGIS_WebAPI.Controllers
 {
@@ -66,6 +69,17 @@ namespace PostGIS_WebAPI.Controllers
             Building building = _buildingService.GetItemFromCoordinates(coordinates);
 
             return Ok(building);
+        }
+
+        [HttpGet]
+        [Route("Query")]
+        public IActionResult Query(string attribute, string input)
+        {
+            var param = new SqlParameter(attribute, input);
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat($"SELECT * FROM public.buildings WHERE {attribute} = '{input}'");
+            var result = _buildingService.GetBySQLQuery(sql.ToString());
+            return Ok(result);
         }
     }
 }

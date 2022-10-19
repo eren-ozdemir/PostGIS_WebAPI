@@ -22,5 +22,6 @@ namespace PostGIS_WebAPI.REPOSITORIES.Abstract
         bool Activate(T item);
         bool ActivateAll();
         bool Save();
+        List<T> GetBySQLQuery(string sql);
     }
 }

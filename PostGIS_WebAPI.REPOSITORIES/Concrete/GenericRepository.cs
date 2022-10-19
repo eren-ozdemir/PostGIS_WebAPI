@@ -8,6 +8,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace PostGIS_WebAPI.REPOSITORIES.Concrete
 {
@@ -78,9 +80,22 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
             }
         }
 
-        public  T GetById(int id)
+        public T GetById(int id)
         {
             return _db.Set<T>().Find(id);
+        }
+
+        public List<T> GetBySQLQuery(string sql)
+        {
+            try
+            {
+                return _db.Set<T>().FromSqlRaw(sql).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public T GetDefault(Expression<Func<T, bool>> exp)
@@ -123,7 +138,7 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
 
         }
 
-        public  bool Save()
+        public bool Save()
         {
             return _db.SaveChanges() > 0;
         }
@@ -133,5 +148,6 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
             _db.Set<T>().Update(item);
             return Save();
         }
+
     }
 }

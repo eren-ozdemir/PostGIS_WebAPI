@@ -107,5 +107,10 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             T result = GetDefault(x => x.IsActive && x.Geometry.Intersects(point));
             return result;
         }
+
+        public List<T> GetBySQLQuery(string sql)
+        {
+            return _repo.GetBySQLQuery(sql);
+        }
     }
 }
