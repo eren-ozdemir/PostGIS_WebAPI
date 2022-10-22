@@ -24,6 +24,6 @@ namespace PostGIS_WebAPI.BUSINESS.Abstract
         bool ActivateAll();
         List<T> GetIntersectingItems(FeatureCollection features);
         T GetItemFromCoordinates(double[] coordinates);
-        List<T> GetBySQLQuery(string sql);
+        List<T> GetBySQLQuery(string attribute, string comparisionOperator, string input);
     }
 }

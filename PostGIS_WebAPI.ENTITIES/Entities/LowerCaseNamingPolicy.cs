@@ -11,7 +11,7 @@ namespace PostGIS_WebAPI.ENTITIES.Entities
     {
         public override string ConvertName(string name)
         {
-            return name.ToLower();
+            return name.ToLowerInvariant();
         }
     }
 }

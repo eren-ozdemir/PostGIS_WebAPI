@@ -23,6 +23,13 @@ namespace PostGIS_WebAPI.Controllers
             _buildingService = buildingService;
         }
 
+        [HttpGet]
+        [Route("GetEmpty")]
+        public IActionResult GetEmpty()
+        {
+            return Ok(new Building());
+        }
+
         [HttpPut]
         [Route("ActivateAll")]
         public IActionResult ActivateAll()
@@ -73,12 +80,12 @@ namespace PostGIS_WebAPI.Controllers
 
         [HttpGet]
         [Route("Query")]
-        public IActionResult Query(string attribute, string input)
+        public IActionResult Query(string attribute, string comparisionOperator, string input)
         {
-            var param = new SqlParameter(attribute, input);
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat($"SELECT * FROM public.buildings WHERE {attribute} = '{input}'");
-            var result = _buildingService.GetBySQLQuery(sql.ToString());
+            //TODO: Fix SQL injection vulnerability
+            //sql.AppendFormat($"SELECT * FROM public.buildings WHERE {attribute} {comparisionOperator} '{input}'");
+            var result = _buildingService.GetBySQLQuery(attribute, comparisionOperator, input);
             return Ok(result);
         }
     }

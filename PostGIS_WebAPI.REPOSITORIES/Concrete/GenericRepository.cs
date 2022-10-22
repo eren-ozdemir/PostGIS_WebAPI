@@ -9,16 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using Microsoft.EntityFrameworkCore;
-
+using System.Data.SqlClient;
+using Npgsql;
+using Microsoft.Extensions.Configuration;
+using System.Data;
 
 namespace PostGIS_WebAPI.REPOSITORIES.Concrete
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
+        private readonly IConfiguration _configuration;
         private readonly CityContext _db;
 
-        public GenericRepository(CityContext db)
+        public GenericRepository(IConfiguration configuration, CityContext db)
         {
+            _configuration = configuration;
             _db = db;
         }
 
@@ -85,11 +90,34 @@ namespace PostGIS_WebAPI.REPOSITORIES.Concrete
             return _db.Set<T>().Find(id);
         }
 
-        public List<T> GetBySQLQuery(string sql)
+        public List<T> GetBySQLQuery(string attribute, string comparisionOperator, string input)
         {
             try
             {
-                return _db.Set<T>().FromSqlRaw(sql).ToList();
+                //string connectionString = _configuration.GetConnectionString("City");
+                //DataTable table = new DataTable();
+                //NpgsqlDataReader reader;
+                //using(NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+                //{
+                //    connection.Open();
+                //    using (NpgsqlCommand command = new NpgsqlCommand("SELECT * FROM public.buildings WHERE @attributeParam = @inputParam ", connection))
+                //    {
+                //        command.Parameters.AddWithValue("@attributeParam", attribute);
+                //        command.Parameters.AddWithValue("@inputParam", input);
+                //        reader = command.ExecuteReader();
+                //        table.Load(reader);
+
+                //        reader.Close();
+                //        connection.Close();
+                //    }
+                //    var result = table.Rows.OfType<T>().ToList();
+                //    return result;
+                //}
+
+
+                //TODO: Fix the SQL injection vulnerability
+                List<T> result = _db.Set<T>().FromSqlRaw($"SELECT * FROM public.buildings WHERE {attribute} {comparisionOperator} '{input}' ").ToList();
+                return result;
             }
             catch (Exception)
             {

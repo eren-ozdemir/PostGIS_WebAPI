@@ -108,9 +108,9 @@ namespace PostGIS_WebAPI.BUSINESS.Concrete
             return result;
         }
 
-        public List<T> GetBySQLQuery(string sql)
+        public List<T> GetBySQLQuery(string attribute, string comparisionOperator, string input)
         {
-            return _repo.GetBySQLQuery(sql);
+            return _repo.GetBySQLQuery(attribute, comparisionOperator, input);
         }
     }
 }
